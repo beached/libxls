@@ -8,8 +8,6 @@ project(libxls
 
 find_package( Iconv )
 
-set(CMAKE_CXX_STANDARD 17 CACHE STRING "The C++ standard whose features are requested.")
-
 set(SOURCE_FILES
         src/xlstool.c
         src/endian.c
@@ -39,11 +37,14 @@ set_target_properties(xlsreader PROPERTIES
         VERSION ${PROJECT_VERSION}
         SOVERSION 1)
 
-install(TARGETS xlsreader EXPORT LibXlsConfig)
+add_subdirectory( cplusplus/ )
+
+install(TARGETS xlsreader xlsreadercpp EXPORT LibXlsConfig)
 install(DIRECTORY include/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME})
+install(DIRECTORY cplusplus/include/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME})
 
 set(libxls_INSTALL_CMAKEDIR "share/LibXls/cmake"
     CACHE STRING "Install location for generated CMake files.")
 
 install(EXPORT LibXlsConfig DESTINATION ${libxls_INSTALL_CMAKEDIR})
-export(TARGETS xlsreader FILE LibXlsConfig.cmake)
+export(TARGETS xlsreader xlsreadercpp FILE LibXlsConfig.cmake)

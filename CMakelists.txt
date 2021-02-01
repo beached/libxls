@@ -9,9 +9,6 @@ project(libxls
 find_package( Iconv )
 
 set(CMAKE_CXX_STANDARD 17 CACHE STRING "The C++ standard whose features are requested.")
-set(BUILD_STATIC OFF CACHE STRING "Build static library OFF;ON;BOTH")
-
-include_directories("${CMAKE_SOURCE_DIR}/include")
 
 set(SOURCE_FILES
         src/xlstool.c

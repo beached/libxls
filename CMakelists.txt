@@ -1,0 +1,35 @@
+cmake_minimum_required(VERSION 3.16)
+project(libxls
+        VERSION "1.6.2"
+        DESCRIPTION "Read binary Excel files from C/C++"
+        HOMEPAGE_URL "https://github.com/beached/libxls"
+        LANGUAGES C CXX
+)
+
+set(CMAKE_CXX_STANDARD 17 CACHE STRING "The C++ standard whose features are requested.")
+
+include_directories("${CMAKE_SOURCE_DIR}/include")
+
+
+set( xlsreader_HEADERS 
+	include/xls.h 
+  include/libxls/brdb.c.h
+  include/libxls/brdb.h 
+  include/libxls/endian.h
+  include/libxls/locale.h
+  include/libxls/ole.h 
+  include/libxls/xlsstruct.h 
+  include/libxls/xlstypes.h 
+  include/libxls/xlstool.h
+	)	
+
+set( xlsreader_SOURCE 
+	src/xlstool.c 
+  src/endian.c 
+  src/locale.c 
+  src/ole.c 
+  src/xls.c
+)
+
+add_library( xlsreader ${xlsreader_SOURCE} )
+target_compile_definitions( xlsreader PRIVATE PACKAGE_VERSION="${PROJECT_VERSION}" HAVE_XLOCALE_H=1 )

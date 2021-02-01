@@ -4,32 +4,42 @@ project(libxls
         DESCRIPTION "Read binary Excel files from C/C++"
         HOMEPAGE_URL "https://github.com/beached/libxls"
         LANGUAGES C CXX
-)
+        )
 
 set(CMAKE_CXX_STANDARD 17 CACHE STRING "The C++ standard whose features are requested.")
+set(BUILD_STATIC OFF CACHE STRING "Build static library OFF;ON;BOTH")
 
 include_directories("${CMAKE_SOURCE_DIR}/include")
 
+set(SOURCE_FILES
+        src/xlstool.c
+        src/endian.c
+        src/locale.c
+        src/ole.c
+        src/xls.c
+        )
 
-set( xlsreader_HEADERS 
-	include/xls.h 
-  include/libxls/brdb.c.h
-  include/libxls/brdb.h 
-  include/libxls/endian.h
-  include/libxls/locale.h
-  include/libxls/ole.h 
-  include/libxls/xlsstruct.h 
-  include/libxls/xlstypes.h 
-  include/libxls/xlstool.h
-	)	
+include(GNUInstallDirs)
 
-set( xlsreader_SOURCE 
-	src/xlstool.c 
-  src/endian.c 
-  src/locale.c 
-  src/ole.c 
-  src/xls.c
-)
+option(BUILD_SHARED_LIBS "Build shared library" ON)
+add_library(xlsreader ${SOURCE_FILES} )
+add_library( ${PROJECT_NAME}::xlsreader ALIAS xlsreader )
 
-add_library( xlsreader ${xlsreader_SOURCE} )
-target_compile_definitions( xlsreader PRIVATE PACKAGE_VERSION="${PROJECT_VERSION}" HAVE_XLOCALE_H=1 )
+target_compile_definitions(xlsreader PRIVATE PACKAGE_VERSION="${PROJECT_VERSION}" HAVE_XLOCALE_H=1)
+
+target_include_directories( xlsreader PUBLIC
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+        $<INSTALL_INTERFACE:include>
+        PRIVATE src)
+
+set_target_properties(xlsreader PROPERTIES
+        VERSION ${PROJECT_VERSION}
+        SOVERSION 1)
+
+install(TARGETS xlsreader EXPORT LibXlsConfig
+        ARCHIVE  DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        LIBRARY  DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        RUNTIME  DESTINATION ${CMAKE_INSTALL_BINDIR})
+install(DIRECTORY include/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME})
+install(EXPORT LibXlsConfig DESTINATION share/LibXls/cmake)
+export(TARGETS xlsreader FILE LibXlsConfig.cmake)

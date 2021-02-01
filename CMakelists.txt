@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.16)
-project(libxls
+project(xls
         VERSION "1.6.2"
         DESCRIPTION "Read binary Excel files from C/C++"
         HOMEPAGE_URL "https://github.com/beached/libxls"

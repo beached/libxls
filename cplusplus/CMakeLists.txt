@@ -1,6 +1,6 @@
 
 add_library( xlsreadercpp src/XlsReader.cpp )
-target_link_libraries( xlsreadercpp PRIVATE xlsreader )
+target_link_libraries( xlsreadercpp PUBLIC xlsreader )
 add_library( ${PROJECT_NAME}::xlsreadercpp ALIAS xlsreadercpp )
 
 target_include_directories( xlsreadercpp PUBLIC

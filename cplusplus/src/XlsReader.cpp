@@ -421,4 +421,6 @@ xlsString WorkBook::char2string(const char *ptr) const
 }
 #endif
 
+XlsException::~XlsException( ) = default;
+
 } // namespace

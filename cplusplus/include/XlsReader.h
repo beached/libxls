@@ -33,6 +33,8 @@
  *
  */
 
+#pragma once
+
 #include <string>
 #include <limits>
 #include <stdexcept>
@@ -158,13 +160,13 @@ namespace xls
 	class XlsException : public std::runtime_error
 	{
 	public:
-		XlsException(const XlsException &ex) throw() 
-			: std::runtime_error(ex)
-		{;}
-		explicit XlsException(const std::string &msg) throw() 
-			: std::runtime_error("XlsReader: " + msg)
-		{;}
-		virtual ~XlsException() throw()
-		{;}
+		XlsException( XlsException const & ) = default;
+		XlsException( XlsException && ) = default;
+		XlsException & operator=( XlsException const & ) = default;
+		XlsException & operator=( XlsException && ) = default;
+		virtual ~XlsException();
+
+		inline explicit XlsException( std::string const & msg) noexcept
+			: std::runtime_error("XlsReader: " + msg) {}
 	};
 }

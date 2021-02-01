@@ -40,8 +40,8 @@ set_target_properties(xlsreader PROPERTIES
 add_subdirectory( cplusplus/ )
 
 install(TARGETS xlsreader xlsreadercpp EXPORT LibXlsConfig)
-install(DIRECTORY include/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME})
-install(DIRECTORY cplusplus/include/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME})
+install(DIRECTORY include/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+install(DIRECTORY cplusplus/include/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 
 set(libxls_INSTALL_CMAKEDIR "share/LibXls/cmake"
     CACHE STRING "Install location for generated CMake files.")

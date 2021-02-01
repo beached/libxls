@@ -6,6 +6,8 @@ project(libxls
         LANGUAGES C CXX
         )
 
+find_package( Iconv )
+
 set(CMAKE_CXX_STANDARD 17 CACHE STRING "The C++ standard whose features are requested.")
 set(BUILD_STATIC OFF CACHE STRING "Build static library OFF;ON;BOTH")
 
@@ -24,6 +26,10 @@ include(GNUInstallDirs)
 option(BUILD_SHARED_LIBS "Build shared library" ON)
 add_library(xlsreader ${SOURCE_FILES} )
 add_library( ${PROJECT_NAME}::xlsreader ALIAS xlsreader )
+
+if( Iconv_FOUND )
+	target_link_libraries( xlsreader PRIVATE Iconv::Iconv )
+endif( )
 
 target_compile_definitions(xlsreader PRIVATE PACKAGE_VERSION="${PROJECT_VERSION}" HAVE_XLOCALE_H=1)
 

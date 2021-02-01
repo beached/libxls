@@ -39,10 +39,11 @@ set_target_properties(xlsreader PROPERTIES
         VERSION ${PROJECT_VERSION}
         SOVERSION 1)
 
-install(TARGETS xlsreader EXPORT LibXlsConfig
-        ARCHIVE  DESTINATION ${CMAKE_INSTALL_LIBDIR}
-        LIBRARY  DESTINATION ${CMAKE_INSTALL_LIBDIR}
-        RUNTIME  DESTINATION ${CMAKE_INSTALL_BINDIR})
+install(TARGETS xlsreader EXPORT LibXlsConfig)
 install(DIRECTORY include/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME})
-install(EXPORT LibXlsConfig DESTINATION share/LibXls/cmake)
+
+set(libxls_INSTALL_CMAKEDIR "share/LibXls/cmake"
+    CACHE STRING "Install location for generated CMake files.")
+
+install(EXPORT LibXlsConfig DESTINATION ${libxls_INSTALL_CMAKEDIR})
 export(TARGETS xlsreader FILE LibXlsConfig.cmake)

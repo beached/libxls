@@ -26,7 +26,7 @@ if( Iconv_FOUND )
 	target_link_libraries( xlsreader PRIVATE Iconv::Iconv )
 endif( )
 
-target_compile_definitions(xlsreader PRIVATE PACKAGE_VERSION="${PROJECT_VERSION}" HAVE_XLOCALE_H=1)
+target_compile_definitions(xlsreader PRIVATE PACKAGE_VERSION="${PROJECT_VERSION}" )
 
 target_include_directories( xlsreader PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>

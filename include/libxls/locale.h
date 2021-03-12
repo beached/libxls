@@ -28,7 +28,7 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
-#ifdef HAVE_XLOCALE_H
+#if __has_include( <xlocale.h> )
 #include <xlocale.h>
 #endif
 #include <locale.h>
